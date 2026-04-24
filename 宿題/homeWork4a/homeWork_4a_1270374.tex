@@ -1,0 +1,185 @@
+\documentclass[uplatex,a4paper,11pt]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{here}
+\usepackage{bookmark}
+
+\geometry{margin=25mm}
+\renewcommand{\baselinestretch}{1.2}
+
+\title{Homework 4a}
+\author{学籍番号: 1270374 \\ 名前: 松本 奈生}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%% ============================================================
+\section*{Question 1}
+%% ============================================================
+\subsection*{(a) $\mathtt{a^*b^*}$}
+
+最初の5要素：
+$\varepsilon,\ \mathtt{a},\ \mathtt{b},\ \mathtt{aa},\ \mathtt{ab}$
+
+要素でない最初の5文字列：
+$\mathtt{ba},\ \mathtt{baa},\ \mathtt{bab},\ \mathtt{bba},\ \mathtt{bbb}$
+
+%% ------------------------------------------------------------
+\subsection*{(b) $\mathtt{a(ba)^*b}$}
+
+最初の5要素：
+$\mathtt{ab},\ \mathtt{abab},\ \mathtt{ababab},\ \mathtt{abababab},\ \mathtt{ababababab}$
+
+要素でない最初の5文字列：
+$\varepsilon,\ \mathtt{a},\ \mathtt{b},\ \mathtt{aa},\ \mathtt{ba}$
+
+%% ------------------------------------------------------------
+\subsection*{(e) $\Sigma^*\mathtt{a}\Sigma^*\mathtt{b}\Sigma^*\mathtt{a}\Sigma^*$}
+
+少なくとも $\mathtt{a}, \mathtt{b}, \mathtt{a}$ をこの順に含む文字列の集合。
+
+最初の5要素：
+$\mathtt{aba},\ \mathtt{aaba},\ \mathtt{abaa},\ \mathtt{abab},\ \mathtt{abba}$
+
+要素でない最初の5文字列：
+$\varepsilon,\ \mathtt{a},\ \mathtt{b},\ \mathtt{aa},\ \mathtt{ab}$
+
+%% ------------------------------------------------------------
+\subsection*{(g) $(\varepsilon \cup \mathtt{a})\mathtt{b}$}
+
+最初の5要素（全要素）：
+$\mathtt{b},\ \mathtt{ab}$
+
+要素でない最初の5文字列：
+$\varepsilon,\ \mathtt{a},\ \mathtt{aa},\ \mathtt{ba},\ \mathtt{bb}$
+
+%% ============================================================
+\section*{Question 2}
+%% ============================================================
+
+\subsection*{1. $M_2$ を入力 $\mathtt{000000}$ に適用したときの configuration の系列}
+
+$M_2$ は入力文字列が $\mathtt{0}$ の個数が偶数かどうかを判定する機械である。
+以下では状態 $q_i$ とテープ内容・ヘッド位置を configuration として表す。
+（ヘッド位置の直前に状態を記載する形式を用いる。）
+
+\begin{align*}
+&q_1\mathtt{000000} \\
+\vdash\; &\sqcup q_2\mathtt{00000} \\
+\vdash\; &\sqcup x\,q_3\mathtt{0000} \\
+\vdash\; &\sqcup x\mathtt{0}\,q_4\mathtt{000} \\
+\vdash\; &\sqcup x\mathtt{0}x\,q_3\mathtt{00} \\
+\vdash\; &\sqcup x\mathtt{0}x\mathtt{0}\,q_4\mathtt{0} \\
+\vdash\; &\sqcup x\mathtt{0}x\mathtt{0}x\,q_3\sqcup \\
+\vdash\; &\sqcup x\mathtt{0}x\mathtt{0}\,q_5 x\sqcup \\
+\vdash\; &\sqcup x\mathtt{0}x\,q_5\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup x\mathtt{0}\,q_5 x\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup xq_5 \mathtt{0}\,x\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup q_5 x\mathtt{0}\,x\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup x\,q_2\mathtt{0}x\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup xx\,q_3 x\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup xxx\,q_3\mathtt{0}x\sqcup \\
+\vdash\; &\sqcup xxx\mathtt{0}\,q_4 x\sqcup \\
+\vdash\; &\sqcup xxx\mathtt{0}x\,q_4\sqcup \\
+\vdash\; &\sqcup xxx\mathtt{0}x\,q_{reject}
+\end{align*}
+
+%% ------------------------------------------------------------
+\subsection*{2. $M_1$ を入力 $\mathtt{10\#11}$ に適用したときの configuration の系列}
+
+$M_1$ は $\{w\#w \mid w \in \{0,1\}^*\}$ を決定する機械である。
+入力 $\mathtt{10\#11}$ は $w=\mathtt{10}$，$w'=\mathtt{11}$ であり $w \neq w'$ なので拒否される。
+
+\begin{align*}
+&q_1\,\mathtt{10\#11} \\
+\vdash\; &x\,q_3\,\mathtt{0\#11} \\
+\vdash\; &x\mathtt{0}\,q_3\,\mathtt{\#11} \\
+\vdash\; &x\mathtt{0\#}\,q_5\,\mathtt{11} \\
+\vdash\; &x\mathtt{0}\,q_6\,\mathtt{\#x1} \\
+\vdash\; &x\,q_6\,\mathtt{0\#x1} \\
+\vdash\; &q_6\,x\mathtt{0\#x1} \\
+\vdash\; &x\,q_{reject}\,\mathtt{0\#x1}
+\end{align*}
+
+
+%% ============================================================
+\section*{Question 3}
+%% ============================================================
+
+言語 $L = \{w \mid w \text{ は } \mathtt{1} \text{ の2倍の個数の } \mathtt{0} \text{ を持つ}\}$
+を決定するチューリング機械 $M$ の実装レベルの記述を以下に示す。
+
+\noindent
+$M =$入力文字列 $w$ に対して：
+
+\begin{enumerate}
+  \item テープ上を左から右へ走査し，まだ処理されていない $1$ を1つ見つける．
+  そのような $1$ が存在する場合は，それを記号 $X$ に書き換える．
+  そのような $1$ が存在しない場合は，手順4へ進む．
+
+  \item テープの左端に戻り，左から右へ走査して，まだ処理されていない $0$ を1つ見つける．
+  そのような $0$ が存在する場合は，それを記号 $Y$ に書き換える．
+  存在しない場合は，入力を拒否せよ．
+
+  \item 再びテープの左端に戻り，左から右へ走査して，まだ処理されていない $0$ を1つ見つける．
+  そのような $0$ が存在する場合は，それを記号 $Y$ に書き換える．
+  存在しない場合は，入力を拒否せよ．
+  その後，手順1へ戻る．
+
+  \item テープ上を左から右へ走査し，まだ処理されていない $0$ または $1$ が存在するかを確認する．
+  もし存在する場合は，入力を拒否せよ．
+  存在しない場合は，入力を受理せよ．
+\end{enumerate}
+
+%% ============================================================
+\section*{Question 4}
+%% ============================================================
+
+\noindent\textbf{命題：}
+$L_D = \{\langle M \rangle \mid M \text{ は } \langle M \rangle \text{ を受理しないチューリング機械}\}$
+はチューリング認識不可能である。
+
+\noindent
+言語
+\[
+L_D = \{ \langle M \rangle \mid M \text{ は } \langle M \rangle \text{ を受理しない} \}
+\]
+が Turing 認識可能であると仮定する．
+すなわち，$L_D$ を認識する Turing 機械 $D$ が存在すると仮定する．
+
+このとき，$\langle D \rangle$ が $L_D$ に属するかどうかで場合分けを行う．
+
+\begin{enumerate}
+  \item $\langle D \rangle \in L_D$ の場合：
+
+  $L_D$ の定義より，$D$ は $\langle D \rangle$ を受理しない．
+
+  一方で，$D$ は $L_D$ を認識するので，
+  $L_D$ の要素はすべて受理しなければならない．
+  よって $\langle D \rangle \in L_D$ ならば，
+  $D$ は $\langle D \rangle$ を受理するはずである．
+
+  これは矛盾である．
+
+  \item $\langle D \rangle \notin L_D$ の場合：
+
+  $L_D$ の定義より，$D$ は $\langle D \rangle$ を受理する．
+
+  しかし，$D$ は $L_D$ を認識するので，
+  $L_D$ に属さない入力は受理してはならない．
+  よって $\langle D \rangle \notin L_D$ ならば，
+  $D$ は $\langle D \rangle$ を受理しないはずである．
+
+  これも矛盾である．
+\end{enumerate}
+
+以上より，いずれの場合にも矛盾が生じるため，
+$L_D$ を認識する Turing 機械 $D$ は存在しない．
+
+したがって，$L_D$ は Turing 認識不可能である．
+
+\end{document}

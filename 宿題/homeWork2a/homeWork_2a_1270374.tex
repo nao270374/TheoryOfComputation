@@ -1,0 +1,172 @@
+\documentclass[uplatex,a4paper,11pt]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{here}
+\usepackage{bookmark}
+
+\geometry{margin=25mm}
+\renewcommand{\baselinestretch}{1.2}
+
+\title{Homework 2a}
+\author{学籍番号: 1270374 \\ 名前: 松本 奈生}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+\subsection*{解答}
+
+有限オートマトンは5つ組
+\[
+M=(Q,\Sigma,\delta,q_0,F)
+\]
+で定義される。
+
+\paragraph{（$M_1$）}
+\[
+Q=\{q_1,q_2,q_3\},\quad \Sigma=\{a,b\},\quad q_0=q_1,\quad F=\{q_2\}
+\]
+
+\paragraph{（$M_2$）}
+\[
+Q=\{q_1,q_2,q_3,q_4\},\quad \Sigma=\{a,b\},\quad q_0=q_1,\quad F=\{q_1,q_4\}
+\]
+
+\section*{Question 2}
+\subsection*{解答（Exercise 1.4 g）}
+
+言語：長さが偶数かつ $a$ の個数が奇数
+
+状態を「長さの偶奇」と「$a$ の個数の偶奇」で管理する。
+
+\[
+Q=\{q_{00},q_{01},q_{10},q_{11}\},\quad \Sigma=\{a,b\},\quad q_0=q_{00},\quad F=\{q_{11}\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & a & b \\
+\hline
+q_{00} & q_{11} & q_{10} \\
+q_{01} & q_{10} & q_{11} \\
+q_{10} & q_{01} & q_{00} \\
+q_{11} & q_{00} & q_{01} \\
+\end{array}
+\]
+
+\section*{Question 3}
+\subsection*{解答（Exercise 1.5 c）}
+
+言語：$ab$ も $ba$ も含まない  
+すなわち $a^* \cup b^*$
+
+\[
+Q=\{q_0,q_a,q_b,q_d\},\quad \Sigma=\{a,b\},\quad q_0=q_0,\quad F=\{q_0,q_a,q_b\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & a & b \\
+\hline
+q_0 & q_a & q_b \\
+q_a & q_a & q_d \\
+q_b & q_d & q_b \\
+q_d & q_d & q_d \\
+\end{array}
+\]
+
+\subsection*{（Exercise 1.5 g）}
+
+言語：$a$ がちょうど2個でない
+
+\[
+Q=\{q_0,q_1,q_2,q_3\},\quad \Sigma=\{a,b\},\quad q_0=q_0,\quad F=\{q_0,q_1,q_3\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & a & b \\
+\hline
+q_0 & q_1 & q_0 \\
+q_1 & q_2 & q_1 \\
+q_2 & q_3 & q_2 \\
+q_3 & q_3 & q_3 \\
+\end{array}
+\]
+
+\subsection*{（Exercise 1.5 h）}
+
+言語：$\{w \mid w \text{ is any string except } a \text{ and } b\}$
+
+すなわち $L = \Sigma^* \setminus \{a,b\}$ である。
+
+\[
+Q=\{q_0,q_1,q_2\},\quad \Sigma=\{a,b\},\quad q_0=q_0,\quad F=\{q_0,q_2\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & a & b \\
+\hline
+q_0 & q_1 & q_1 \\
+q_1 & q_2 & q_2 \\
+q_2 & q_2 & q_2 \\
+\end{array}
+\]
+
+ただし，状態 $q_1$ は長さ1の文字列を表し，このときのみ文字列 $a,b$ を排除するため非受理とする。
+
+\section*{Question 4}
+\subsection*{解答（Exercise 1.6 c）}
+
+部分文字列 $0101$ を含む言語
+
+\[
+Q=\{q_0,q_1,q_2,q_3,q_4\},\quad \Sigma=\{0,1\},\quad q_0=q_0,\quad F=\{q_4\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & 0 & 1 \\
+\hline
+q_0 & q_1 & q_0 \\
+q_1 & q_1 & q_2 \\
+q_2 & q_3 & q_0 \\
+q_3 & q_1 & q_4 \\
+q_4 & q_4 & q_4 \\
+\end{array}
+\]
+
+\subsection*{（Exercise 1.6 k）}
+
+言語 $\{\epsilon,0\}$
+
+\[
+Q=\{q_0,q_1,q_d\},\quad \Sigma=\{0,1\},\quad q_0=q_0,\quad F=\{q_0,q_1\}
+\]
+
+\[
+\begin{array}{c|cc}
+ & 0 & 1 \\
+\hline
+q_0 & q_1 & q_d \\
+q_1 & q_d & q_d \\
+q_d & q_d & q_d \\
+\end{array}
+\]
+
+\section*{Question 5}
+\subsection*{解答}
+
+\begin{itemize}
+\item (1) $A \cup I$：$\epsilon, a, b, aa, ab$
+\item (2) $A \circ I$：$aa, ab, ba, bb, aaa$
+\item (3) $A^*$：$\epsilon, a, aa, aaa, aaaa$
+\item (4) $I^*$：$\epsilon, b, bb, bbb, bbbb$
+\end{itemize}
+
+\end{document}

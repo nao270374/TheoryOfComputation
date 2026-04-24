@@ -1,0 +1,204 @@
+\documentclass[uplatex,a4paper,11pt]{jsarticle}
+
+% ===== パッケージ =====
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+\usepackage{hyperref}
+\usepackage{here}
+\usepackage{bookmark}
+
+\geometry{margin=25mm}
+\renewcommand{\baselinestretch}{1.3}
+
+% ===== 定理環境 =====
+\newtheorem{theorem}{定理}
+
+% ===== コマンド =====
+\newcommand{\N}{\mathbb{N}}
+
+% ===== タイトル =====
+\title{Homework 1b}
+\author{学籍番号: 1270374 \\ 名前: 松本 奈生}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% =========================
+% Homework 1b
+% =========================
+
+\section*{Homework 1b}
+
+\section*{Question 1 (Perfect Matching と CNF)}
+
+\subsection*{証明}
+
+グラフ $G=(V,E)$ に対して，$\phi_G$ が充足可能であることと，
+$G$ が完全マッチングを持つことが同値であることを示す．
+
+\subsubsection*{(i) $G$ が完全マッチングを持つ $\Rightarrow$ $\phi_G$ は充足可能}
+
+完全マッチング $M$ を用いて，
+
+\[
+\theta(x_e)=
+\begin{cases}
+1 & (e \in M)\\
+0 & (e \notin M)
+\end{cases}
+\]
+
+と定める．
+
+各頂点にはちょうど1本の辺が接続されるため，
+$\phi_{1,G}$ と $\phi_{2,G}$ の両方を満たす．
+
+よって $\phi_G$ は充足可能．
+
+\subsubsection*{(ii) $\phi_G$ が充足可能 $\Rightarrow$ 完全マッチングが存在}
+
+\[
+M = \{e \in E \mid \theta(x_e)=1\}
+\]
+
+とする．
+
+各頂点について「少なくとも1本」かつ「高々1本」なので，
+ちょうど1本選ばれる．
+
+よって $M$ は完全マッチング．
+
+\[
+\boxed{\text{証明完了}}
+\]
+
+% =========================
+
+\section*{Question 2 (4正則グラフ)}
+
+\subsection*{証明}
+
+$n \ge 5$ とする．  
+頂点 $V=\{0,1,\dots,n-1\}$ を円周上に配置する．
+
+\[
+E = \{\{i,i+1\}, \{i,i+2\} \mid i \in V\} \ (\mathrm{mod}\ n)
+\]
+
+各頂点は $i\pm1, i\pm2$ に接続するので，
+
+\[
+\deg(i)=4
+\]
+
+よって4正則グラフが存在する．
+
+
+% =========================
+
+\section*{Question 3 (Petersenグラフの彩色数)}
+
+\subsection*{証明}
+
+Petersenグラフの彩色数 $\chi(G)$ を求めるため，
+必要な色数について場合分けして考える．
+
+まず，$\chi(G) < 3$ の場合を考える．  
+これは $\chi(G) \le 2$，すなわち2色で彩色できることを意味する．  
+しかし，2色で彩色できるグラフは二部グラフである．
+
+一方，Petersenグラフは長さ5のサイクル（奇数長サイクル）を含むため，
+二部グラフではない．  
+したがって，2色での彩色は不可能であり，
+
+\[
+\chi(G) \ge 3
+\]
+
+が成り立つ．
+
+次に，$\chi(G) = 3$ の場合を考える．  
+実際にPetersenグラフは3色で彩色することができる．
+例えば，外側の5頂点を2色で交互に塗り，
+内側の頂点を適切に3色目を含めて塗ることで，
+隣接する頂点が異なる色になるようにできる．
+
+したがって，
+
+\[
+\chi(G) \le 3
+\]
+
+が成り立つ．
+
+以上より，
+
+\[
+\chi(G) = 3
+\]
+
+である．
+
+% =========================
+
+\section*{Question 4}
+\subsection*{解答}
+
+PetersenグラフがHamiltonパスを持つが，Hamilton閉路を持たないことを示す．
+
+まず，Hamiltonパスの存在について考える．
+Petersenグラフは対称性の高いグラフであるため，適切に頂点を選べば，
+すべての頂点を一度ずつ通る経路が存在すると考えられる．
+
+実際に頂点を順に辿っていくと，隣接する頂点をうまく選ぶことで，
+全頂点を重複なく通ることができる．
+したがって，PetersenグラフはHamiltonパスを持つ．
+
+次に，Hamilton閉路の存在について考える．ここでは背理法を用いる．
+PetersenグラフがHamilton閉路を持つと仮定する．
+
+Petersenグラフは3正則グラフであり，各頂点の次数は3である．
+Hamilton閉路では，各頂点はちょうど2本の辺で接続されるため，
+各頂点には1本の使われない辺が残る．
+
+この残った辺を集めると，各頂点にちょうど1本ずつ対応するので，
+それらは完全マッチングを構成することになる．
+
+ここで，Petersenグラフの構造を考えると，
+このような完全マッチングを取り除いた場合，
+残りのグラフは1つの閉路とはならず，
+複数の連結成分に分かれてしまう．
+
+しかし，Hamilton閉路が存在するならば，
+残りの辺は1つの閉路を構成するはずであり，これは矛盾である．
+
+したがって，PetersenグラフはHamilton閉路を持たない．
+
+以上より，PetersenグラフはHamiltonパスを持つが，
+Hamilton閉路は持たないことが示された．
+
+% =========================
+
+\section*{Question 5}
+
+\subsection*{証明}
+
+頂点数 $n \ge 2$ のグラフを考える．
+
+次数は $0$ から $n-1$ の範囲であるが，
+
+- 次数0があると次数$n-1$は存在できない
+
+したがって次数の種類は高々 $n-1$ 個．
+
+頂点は $n$ 個あるので，鳩の巣原理より  
+同じ次数を持つ頂点が存在する．
+
+
+\end{document}
+
