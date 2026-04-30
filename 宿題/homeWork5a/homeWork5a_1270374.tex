@@ -1,0 +1,219 @@
+\documentclass[uplatex,a4paper,11pt]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{here}
+\usepackage{bookmark}
+
+\geometry{margin=25mm}
+\renewcommand{\baselinestretch}{1.2}
+
+\title{Homework 5a}
+\author{学籍番号: 1270374 \\ 名前: 松本 奈生}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%% ============================================================
+\section*{Question 1}
+%% ============================================================
+
+$A_{TM}$ が決定可能であると仮定する．
+すなわち，任意の入力 $\langle M, w \rangle$ に対して，
+$M$ が $w$ を受理するかどうかを必ず判定する Turing 機械 $H$ が存在するとする．
+
+このとき，言語
+\[
+L_D = \{ \langle M \rangle \mid M は \langle M \rangle を受理しない \}
+\]
+を決定する機械 $D$ を構成する．
+
+$D$ は入力 $\langle M \rangle$ に対して以下のように動作する：
+
+\begin{enumerate}
+    \item $H(\langle M, \langle M \rangle \rangle)$ を実行する
+    \item $H$ が accept した場合，reject する
+    \item $H$ が reject した場合，accept する
+\end{enumerate}
+
+$H$ は必ず停止するため，$D$ も必ず停止する．
+したがって $D$ は $L_D$ を決定する．
+
+しかし Homework 4a で示したように，$L_D$ は認識不可能であるため，
+決定可能であることはあり得ない．
+
+よって仮定は誤りであり，$A_{TM}$ は決定不能である．
+
+---
+
+%% ============================================================
+\section*{Question 2}
+%% ============================================================
+
+$A_{TM}$ が Turing 認識可能であることを示す．
+
+$A_{TM} = \{ \langle M, w \rangle \mid M が w を受理する \}$ に対して，
+以下の Turing 機械 $R$ を構成する：
+
+\begin{enumerate}
+    \item 入力 $\langle M, w \rangle$ を受け取る
+    \item $M$ を入力 $w$ 上でシミュレートする
+    \item $M$ が accept した場合，accept する
+    \item $M$ が reject した場合，reject する
+\end{enumerate}
+
+もし $M$ が $w$ 上で無限ループする場合，$R$ も停止しない．
+
+したがって，
+\begin{itemize}
+    \item $w \in A_{TM}$ のとき，必ず accept する
+    \item $w \notin A_{TM}$ のとき，reject またはループ
+\end{itemize}
+
+となるので，$A_{TM}$ は Turing 認識可能である．
+
+---
+
+%% ============================================================
+\section*{Question 3}
+%% ============================================================
+
+\subsection*{1.}
+
+\[
+\left[
+\frac{ab}{abab}
+\right]
+\left[
+\frac{ab}{abab}
+\right]
+\left[
+\frac{aba}{b}
+\right]
+\left[
+\frac{b}{a}
+\right]
+\left[
+\frac{b}{a}
+\right]
+\left[
+\frac{aa}{a}
+\right]
+\left[
+\frac{aa}{a}
+\right]
+\]
+
+---
+
+\subsection*{2.}
+
+与えられた PCP：
+\[
+\left\{
+\left[\frac{ab}{abab}\right],\ 
+\left[\frac{b}{a}\right],\ 
+\left[\frac{aba}{b}\right]
+\right\}
+\]
+
+この問題に match が存在しないことを示す．
+
+各ドミノについて，上段と下段の長さの差を考える：
+
+\[
+\begin{aligned}
+\left[\frac{ab}{abab}\right] &: \quad 2 - 4 = -2 \\
+\left[\frac{b}{a}\right] &: \quad 1 - 1 = 0 \\
+\left[\frac{aba}{b}\right] &: \quad 3 - 1 = +2
+\end{aligned}
+\]
+
+任意の列に対して，上段と下段が一致するためには，
+全体の長さが一致する必要があるため，これらの差の総和は 0 でなければならない．
+
+したがって，ドミノ $\left[\frac{ab}{abab}\right]$ と $\left[\frac{aba}{b}\right]$ は同じ回数だけ使用されなければならない．
+
+このとき，ドミノ $\left[\frac{b}{a}\right]$ は長さの差に影響を与えないため，
+任意の回数挿入できる．
+
+しかし，文字列として一致するためには，
+途中までの文字列が常に一致している必要がある
+
+ここで，各ドミノの先頭文字に注目すると：
+
+\begin{itemize}
+    \item $\left[\frac{ab}{abab}\right]$ は，上段・下段ともに $\mathtt{a}$ で始まる
+    \item $\left[\frac{aba}{b}\right]$ は，上段は $\mathtt{a}$，下段は $\mathtt{b}$ で始まる
+    \item $\left[\frac{b}{a}\right]$ は，上段は $\mathtt{b}$，下段は $\mathtt{a}$ で始まる
+\end{itemize}
+
+どのドミノを先頭に選んでも，上段と下段の最初の文字が一致しない場合が生じるか，
+または途中で不一致が発生する．
+
+したがって，いかなる列をとっても，上段と下段の文字列が完全に一致することはない．
+
+ゆえに，この PCP インスタンスには match は存在しない．
+
+---
+
+%% ============================================================
+\section*{Question 4}
+%% ============================================================
+
+$ALL_{TM}$ が決定不能であることを示す．
+
+\[
+ALL_{TM} = \{ \langle M \rangle \mid L(M) = \Sigma^* \}
+\]
+
+$A_{TM}$ からの帰着により証明する．
+
+---
+
+$A_{TM}$ の入力 $\langle M, w \rangle$ に対して，
+新しい Turing 機械 $M'$ を次のように構成する：
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $M(w)$ をシミュレートする
+    \item $M(w)$ が accept した場合，accept
+    \item それ以外（reject またはループ）の場合，reject
+\end{enumerate}
+
+---
+
+このとき：
+
+\begin{itemize}
+    \item $M$ が $w$ を受理するなら，$M'$ はすべての入力を受理する
+    \item $M$ が $w$ を受理しないなら，$M'$ はどの入力も受理しない
+\end{itemize}
+
+したがって：
+
+\[
+\langle M, w \rangle \in A_{TM} \iff \langle M' \rangle \in ALL_{TM}
+\]
+
+---
+
+ここで $ALL_{TM}$ が決定可能と仮定すると，
+この変換により $A_{TM}$ も決定可能になってしまう．
+
+しかし $A_{TM}$ は決定不能であるため矛盾．
+
+---
+
+よって，
+
+\[
+ALL_{TM} \text{ は undecidable である．}
+\]
+
+---
+
+\end{document}
