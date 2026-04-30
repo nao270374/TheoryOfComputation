@@ -1,0 +1,431 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{here}
+\usepackage{bookmark}
+
+\geometry{margin=25mm}
+\renewcommand{\baselinestretch}{1.2}
+
+\title{Homework 5b}
+\author{学籍番号: 1270374 \\ 名前: 松本 奈生}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%% ============================================================
+\section*{Question 1}
+%% ============================================================
+
+\subsection*{1.}
+\[
+EPS_{TM} = \{ \langle M \rangle \mid M \text{ は } \varepsilon \text{ を受理する} \}
+\]
+
+$A_{TM}$ からの写像帰着により，$EPS_{TM}$ が決定不能であることを示す．
+
+\[
+A_{TM} = \{ \langle M, w \rangle \mid M \text{ が } w \text{ を受理する} \}
+\]
+
+任意の $\langle M, w \rangle$ に対し，TM $M'$ を次のように構成する：
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $x \neq \varepsilon$ なら拒否
+    \item $x = \varepsilon$ なら $M$ を入力 $w$ 上でシミュレートする
+    \begin{itemize}
+        \item $M(w)=accept$ なら受理
+        \item $M(w)=reject$ なら拒否
+        \item ループするならループ
+    \end{itemize}
+\end{enumerate}
+
+このとき，
+\[
+M(w)=accept \iff \varepsilon \in L(M')
+\]
+
+よって，
+\[
+\langle M,w\rangle \in A_{TM} \iff \langle M' \rangle \in EPS_{TM}
+\]
+
+したがって，
+\[
+A_{TM} \leq_m EPS_{TM}
+\]
+
+ゆえに $EPS_{TM}$ は決定不能である．
+
+---
+
+\subsection*{2.}
+\[
+ZO = \{ \langle M \rangle \mid L(M)=0^*1^* \}
+\]
+
+$A_{TM}$ からの写像帰着により示す．
+
+任意の $\langle M,w\rangle$ に対し，TM $M'$ を構成する：
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $x \notin 0^*1^*$ なら拒否
+    \item $x \in 0^*1^*$ なら $M(w)$ をシミュレート
+    \begin{itemize}
+        \item $M(w)=accept$ なら受理
+        \item $M(w)=reject$ なら拒否
+        \item ループならループ
+    \end{itemize}
+\end{enumerate}
+
+このとき，
+\[
+M(w)=accept \Rightarrow L(M')=0^*1^*
+\]
+\[
+M(w)\neq accept \Rightarrow L(M')=\emptyset
+\]
+
+したがって，
+\[
+\langle M,w\rangle \in A_{TM} \iff \langle M' \rangle \in ZO
+\]
+
+よって，
+\[
+A_{TM} \leq_m ZO
+\]
+
+ゆえに $ZO$ は決定不能である．
+
+---
+
+\subsection*{3.}
+\[
+T = \{ \langle M \rangle \mid \forall w,\; (w \in L(M) \Rightarrow w^R \in L(M)) \}
+\]
+
+$A_{TM}$ から $\overline{T}$ への写像帰着を考える．
+
+任意の $\langle M,w\rangle$ に対し，TM $M'$ を構成する：
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $x = w$ なら $M(w)$ をシミュレート
+    \begin{itemize}
+        \item $M(w)=accept$ なら受理
+        \item それ以外は受理しない
+    \end{itemize}
+    \item $x = w^R$ なら拒否
+    \item それ以外は拒否
+\end{enumerate}
+
+このとき，
+
+\[
+M(w)=accept \Rightarrow w \in L(M'),\; w^R \notin L(M')
+\]
+よって $\langle M' \rangle \notin T$
+
+\[
+M(w)\neq accept \Rightarrow L(M')=\emptyset
+\]
+このとき条件は自明に成立するため $\langle M' \rangle \in T$
+
+したがって，
+\[
+\langle M,w\rangle \in A_{TM} \iff \langle M' \rangle \in \overline{T}
+\]
+
+よって，
+\[
+A_{TM} \leq_m \overline{T}
+\]
+
+ゆえに $T$ は決定不能である．
+
+---
+
+\subsection*{4.}
+\[
+OL = \{ \langle M,A \rangle \mid \exists w,\; (M(w)=accept \land A(w)=accept) \}
+\]
+
+$A_{TM}$ からの写像帰着により示す．
+
+任意の $\langle M,w\rangle$ に対し，$M'$ と DFA $A$ を構成する：
+
+\begin{itemize}
+    \item $A$ は $\Sigma^*$ を受理する DFA
+    \item $M'$ は次のように動作する：
+\end{itemize}
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $M(w)$ をシミュレート
+    \begin{itemize}
+        \item $M(w)=accept$ なら $x$ を受理
+        \item それ以外は受理しない（またはループ）
+    \end{itemize}
+\end{enumerate}
+
+このとき，
+
+\[
+M(w)=accept \Rightarrow L(M')=\Sigma^*
+\Rightarrow L(M') \cap L(A) \neq \emptyset
+\]
+
+\[
+M(w)\neq accept \Rightarrow L(M')=\emptyset
+\Rightarrow L(M') \cap L(A) = \emptyset
+\]
+
+したがって，
+\[
+\langle M,w\rangle \in A_{TM}
+\iff
+\langle M',A\rangle \in OL
+\]
+
+よって，
+\[
+A_{TM} \leq_m OL
+\]
+
+ゆえに $OL$ は決定不能である．
+
+%% ============================================================
+\section*{Question 2}
+%% ============================================================
+
+写像帰着 $A \leq_m B$ かつ $B$ が正規言語であるときに，
+$A$ も正規言語であるとは限らない．
+
+その理由は，写像帰着は言語の「難しさ」の関係を表すものであり，
+正規性のような言語クラスの性質を保存するものではないためである．
+
+実際，任意の言語 $A$ に対して，ある正規言語 $B$ への写像帰着を構成することができる．
+
+例えば，アルファベット $\Sigma = \{0,1\}$ とし，
+\[
+B = \{0x \mid x \in \Sigma^* \}
+\]
+とすると，$B$ は正規言語である．
+
+ここで，任意の言語 $A$ に対して計算可能な関数 $f$ を次のように定義する：
+\[
+f(x) =
+\begin{cases}
+0x & (x \in A) \\
+1x & (x \notin A)
+\end{cases}
+\]
+
+このとき，
+\[
+x \in A \iff f(x) \in B
+\]
+が成り立つため，
+\[
+A \leq_m B
+\]
+である．
+
+しかし $A$ は任意に選べるので，非正規言語（例えば $A_{TM}$）でもよい．
+
+したがって，
+\[
+A \leq_m B \text{ かつ } B \text{ が正規} \;\;\Rightarrow\;\; A \text{ が正規}
+\]
+は一般には成り立たない．
+
+%% ============================================================
+\section*{Question 3}
+%% ============================================================
+
+Question 1で扱った言語のうち，以下の2つについて，
+Turing認識可能性を示す．
+
+\subsection*{(1) $EPS_{TM}$ はTuring認識可能}
+
+\[
+EPS_{TM} = \{ \langle M \rangle \mid M \text{ は } \varepsilon \text{ を受理する} \}
+\]
+
+$A_{TM}$ からの写像帰着を考える：
+\[
+A_{TM} \leq_m EPS_{TM}
+\]
+
+任意の入力 $\langle M, w \rangle$ に対して，
+Turing機械 $M'$ を次のように構成する：
+
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item もし $x \neq \varepsilon$ なら拒否
+    \item もし $x = \varepsilon$ なら $M$ を入力 $w$ 上でシミュレートする：
+    \begin{itemize}
+        \item $M$ が受理すれば受理
+        \item $M$ が拒否すれば拒否
+        \item $M$ がループすればループ
+    \end{itemize}
+\end{enumerate}
+
+このとき，
+\[
+\langle M, w \rangle \in A_{TM}
+\iff
+\langle M' \rangle \in EPS_{TM}
+\]
+が成り立つ．
+
+ここで $A_{TM}$ はTuring認識可能であり，
+写像帰着によって認識可能性は保存されるため，
+\[
+EPS_{TM} \text{ はTuring認識可能である．}
+\]
+
+\subsection*{(2) $OL$ はTuring認識可能}
+
+\[
+OL = \{ \langle M, A \rangle \mid \exists w \in \Sigma^*,\;
+M \text{ と } A \text{ の両方が } w \text{ を受理する} \}
+\]
+
+$A_{TM}$ からの写像帰着を考える：
+\[
+A_{TM} \leq_m OL
+\]
+
+任意の入力 $\langle M, w \rangle$ に対して，
+Turing機械 $M'$ とDFA $A$ を次のように構成する：
+
+\begin{itemize}
+    \item $A$ は $\Sigma^*$ を受理するDFAとする
+    \item $M'$ は次のように動作する：
+    \begin{enumerate}
+        \item 入力 $x$ を受け取る
+        \item $M$ を入力 $w$ 上でシミュレートする
+        \begin{itemize}
+            \item $M$ が受理すれば受理
+            \item $M$ が拒否すれば拒否
+            \item $M$ がループすればループ
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+このとき，
+\[
+M(w)=accept \Rightarrow L(M')=\Sigma^*
+\Rightarrow L(M') \cap L(A) \neq \emptyset
+\]
+
+\[
+M(w)\neq accept \Rightarrow L(M')=\emptyset
+\Rightarrow L(M') \cap L(A) = \emptyset
+\]
+
+したがって，
+\[
+\langle M,w\rangle \in A_{TM}
+\iff
+\langle M',A\rangle \in OL
+\]
+
+よって，
+\[
+A_{TM} \leq_m OL
+\]
+
+ここで $A_{TM}$ はTuring認識可能であり，
+写像帰着によって認識可能性は保存されるため，
+\[
+OL \text{ はTuring認識可能である．}
+\]
+
+%% ============================================================
+\section*{Question 4}
+%% ============================================================
+
+ここでは (1) を解答する．
+
+\subsection*{(1)}
+
+\[
+REGULAR_{TM} = \{ \langle M \rangle \mid L(M) \text{ が正規言語である} \}
+\]
+
+まず，$\overline{REGULAR_{TM}}$ がTuring認識不可能であることを示す．
+
+$\overline{A_{TM}}$ からの写像帰着を構成する．
+
+任意の $\langle M,w\rangle$ に対し，TM $M_2$ を次のように構成する：
+\begin{enumerate}
+    \item 入力 $x$ を受け取る
+    \item $x$ が $0^n1^n$ の形なら受理
+    \item それ以外の場合，$M(w)$ をシミュレートし，
+    \begin{itemize}
+        \item $M(w)=accept$ のとき受理
+        \item それ以外は受理しない（またはループ）
+    \end{itemize}
+\end{enumerate}
+
+このとき，
+\[
+M(w)=accept \Rightarrow L(M_2)=\Sigma^* \ (\text{正規})
+\]
+\[
+M(w)\neq accept \Rightarrow L(M_2)=\{0^n1^n\} \ (\text{非正規})
+\]
+
+したがって，
+\[
+\langle M,w\rangle \in \overline{A_{TM}}
+\iff
+\langle M_2 \rangle \in \overline{REGULAR_{TM}}
+\]
+
+よって，
+\[
+\overline{A_{TM}} \leq_m \overline{REGULAR_{TM}}
+\]
+
+ここで $\overline{A_{TM}}$ はTuring認識不可能であるため，
+$\overline{REGULAR_{TM}}$ もTuring認識不可能である．
+
+\vspace{1em}
+
+次に，$REGULAR_{TM}$ がTuring認識不可能であることを示す．
+
+$A_{TM}$ からの写像帰着を構成する．
+
+同様にして，
+\[
+\langle M,w\rangle \in A_{TM}
+\iff
+\langle M_2 \rangle \in REGULAR_{TM}
+\]
+
+が成り立つため，
+\[
+A_{TM} \leq_m REGULAR_{TM}
+\]
+
+ここで $A_{TM}$ はTuring認識可能であるが，
+$\overline{A_{TM}}$ はTuring認識不可能であることから，
+$REGULAR_{TM}$ はTuring認識不可能である．
+
+\vspace{1em}
+
+以上より，
+\[
+REGULAR_{TM},\; \overline{REGULAR_{TM}}
+\]
+はいずれもTuring認識不可能である．
+\end{document}
